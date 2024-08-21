@@ -9,11 +9,62 @@ namespace WhoDoesWhat
         WDWDoc document = new WDWDoc();
         FileManager fileManager = new FileManager();
         BrowserHelper browserHelper = new BrowserHelper();
+        List<CheckBox> responsibilityButtons = new();
 
         public Form1()
         {
             InitializeComponent();
             fileManager.Filter = "Who Does What Files (*.wdw)|*.wdw|All files (*.*)|*.*";
+
+            responsibilityButtons.Add(checkBox1);
+            responsibilityButtons.Add(checkBox2);
+            responsibilityButtons.Add(checkBox3);
+            responsibilityButtons.Add(checkBox4);
+            responsibilityButtons.Add(checkBox5);
+            responsibilityButtons.Add(checkBox6);
+
+            checkBox1.CheckedChanged += CheckBox_CheckedChanged;
+            checkBox2.CheckedChanged += CheckBox_CheckedChanged;
+            checkBox3.CheckedChanged += CheckBox_CheckedChanged;
+            checkBox4.CheckedChanged += CheckBox_CheckedChanged;
+            checkBox5.CheckedChanged += CheckBox_CheckedChanged;
+            checkBox6.CheckedChanged += CheckBox_CheckedChanged;
+        }
+
+        private void CheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (programaticSetting)
+            {
+                return;
+            }
+            List<string> checkedItems = new List<string>();
+            foreach (CheckBox cb in responsibilityButtons)
+            {
+                if (cb.Checked)
+                {
+                    checkedItems.Add(cb.Text);
+                }
+            }
+            UpdateItem(checkedItems);
+
+            //    // item does not get checked until after this call
+            //    List<string> checkedItems = new List<string>();
+            //    foreach (object item in checkedListBox1.CheckedItems)
+            //    {
+            //        checkedItems.Add(item.ToString());
+            //    }
+            //    // add
+            //    if ((e.CurrentValue == CheckState.Unchecked) && (e.NewValue == CheckState.Checked))
+            //    {
+            //        checkedItems.Add(checkedListBox1.Items[e.Index].ToString());
+            //    }
+            //    // remove
+            //    if ((e.CurrentValue == CheckState.Checked) && (e.NewValue == CheckState.Unchecked))
+            //    {
+            //        //checkedItems.Add(checkedListBox1.Items[e.Index].ToString());
+            //        checkedItems.Remove(checkedListBox1.Items[e.Index].ToString());
+            //    }
+            //    UpdateItem(checkedItems);
         }
 
         private void ShowDocument()
@@ -161,7 +212,14 @@ namespace WhoDoesWhat
 
             string selModel = comboBox2.Items[comboBox2.SelectedIndex].ToString();
 
-            checkedListBox1.Items.Clear();
+            //checkedListBox1.Items.Clear();
+            foreach (CheckBox cb in responsibilityButtons)
+            {
+                cb.Enabled = false;
+                cb.Visible = false;
+                cb.Text = string.Empty;
+                cb.Checked = false;
+            }
 
             List<ComboItem> items = ComboItems.RACI;
 
@@ -193,9 +251,18 @@ namespace WhoDoesWhat
                     break;
             }
 
+            int respNum = 0;
+
             foreach (ComboItem item in items)
             {
-                checkedListBox1.Items.Add(item);
+                //checkedListBox1.Items.Add(item);
+                CheckBox cb = responsibilityButtons[respNum];
+                cb.Enabled = false;
+                cb.Visible = true;
+                cb.Text = item.Name;
+                cb.Checked = false;
+
+                respNum++;
             }
             ShowResponsibilities();
         }
@@ -206,31 +273,31 @@ namespace WhoDoesWhat
         }
 
         bool programaticSetting = false;
-        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (programaticSetting)
-            {
-                return;
-            }
-            // item does not get checked until after this call
-            List<string> checkedItems = new List<string>();
-            foreach (object item in checkedListBox1.CheckedItems)
-            {
-                checkedItems.Add(item.ToString());
-            }
-            // add
-            if ((e.CurrentValue == CheckState.Unchecked) && (e.NewValue == CheckState.Checked))
-            {
-                checkedItems.Add(checkedListBox1.Items[e.Index].ToString());
-            }
-            // remove
-            if ((e.CurrentValue == CheckState.Checked) && (e.NewValue == CheckState.Unchecked))
-            {
-                //checkedItems.Add(checkedListBox1.Items[e.Index].ToString());
-                checkedItems.Remove(checkedListBox1.Items[e.Index].ToString());
-            }
-            UpdateItem(checkedItems);
-        }
+        //private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
+        //{
+        //    if (programaticSetting)
+        //    {
+        //        return;
+        //    }
+        //    // item does not get checked until after this call
+        //    List<string> checkedItems = new List<string>();
+        //    foreach (object item in checkedListBox1.CheckedItems)
+        //    {
+        //        checkedItems.Add(item.ToString());
+        //    }
+        //    // add
+        //    if ((e.CurrentValue == CheckState.Unchecked) && (e.NewValue == CheckState.Checked))
+        //    {
+        //        checkedItems.Add(checkedListBox1.Items[e.Index].ToString());
+        //    }
+        //    // remove
+        //    if ((e.CurrentValue == CheckState.Checked) && (e.NewValue == CheckState.Unchecked))
+        //    {
+        //        //checkedItems.Add(checkedListBox1.Items[e.Index].ToString());
+        //        checkedItems.Remove(checkedListBox1.Items[e.Index].ToString());
+        //    }
+        //    UpdateItem(checkedItems);
+        //}
 
         private void UpdateItem(List<string> responsibilities)
         {
@@ -295,33 +362,77 @@ namespace WhoDoesWhat
             string task = GetTaskValue();
             string party = GetPartyValue();
 
-            checkedListBox1.Enabled = ((comboBox2.SelectedIndex != -1) &&
+            bool enabled = ((comboBox2.SelectedIndex != -1) &&
                 (!string.IsNullOrEmpty(task)) &&
                 (!string.IsNullOrEmpty(party)));
 
             programaticSetting = true;
 
-            for (int itemNum = 0; itemNum < checkedListBox1.Items.Count; itemNum++)
+            foreach (CheckBox cb in responsibilityButtons)
             {
-                checkedListBox1.SetItemChecked(itemNum, false);
+                cb.Enabled = enabled && (!string.IsNullOrEmpty(cb.Text));
+                //cb.Enabled = false;
+                //cb.Visible = false;
+                //cb.Text = string.Empty;
+                cb.Checked = false;
             }
 
             WDWItem item = document.Items.Where(s => ((s.Task == task) && (s.Person_Role == party)))
                 .FirstOrDefault();
             if (item != null)
             {
+                int buttonNumber = 0;
                 foreach (string responsibility in item.Responsibilities)
                 {
-                    int idx = checkedListBox1.FindStringExact(responsibility);
-                    if (idx != -1)
+                    foreach (CheckBox cb in responsibilityButtons)
                     {
-                        checkedListBox1.SetItemChecked(idx, true);
+                        if (cb.Text.Equals(responsibility, StringComparison.OrdinalIgnoreCase))
+                            cb.Checked = true;
                     }
+                    //int idx = checkedListBox1.FindStringExact(responsibility);
+                    //if (idx != -1)
+                    //{
+                    //    checkedListBox1.SetItemChecked(idx, true);
+                    //}
                 }
             }
 
             programaticSetting = false;
         }
+
+        //private void ShowResponsibilities_OG()
+        //{
+        //    string task = GetTaskValue();
+        //    string party = GetPartyValue();
+
+        //    checkedListBox1.Enabled = ((comboBox2.SelectedIndex != -1) &&
+        //        (!string.IsNullOrEmpty(task)) &&
+        //        (!string.IsNullOrEmpty(party)));
+
+        //    programaticSetting = true;
+
+        //    for (int itemNum = 0; itemNum < checkedListBox1.Items.Count; itemNum++)
+        //    {
+        //        checkedListBox1.SetItemChecked(itemNum, false);
+        //    }
+
+        //    WDWItem item = document.Items.Where(s => ((s.Task == task) && (s.Person_Role == party)))
+        //        .FirstOrDefault();
+        //    if (item != null)
+        //    {
+        //        foreach (string responsibility in item.Responsibilities)
+        //        {
+        //            int idx = checkedListBox1.FindStringExact(responsibility);
+        //            if (idx != -1)
+        //            {
+        //                checkedListBox1.SetItemChecked(idx, true);
+        //            }
+        //        }
+        //    }
+
+        //    programaticSetting = false;
+        //}
+
 
         private void button2_Click(object sender, EventArgs e)
         {

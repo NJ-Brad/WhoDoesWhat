@@ -38,9 +38,14 @@
             label4 = new Label();
             label5 = new Label();
             listBox2 = new ListBox();
-            checkedListBox1 = new CheckedListBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            checkBox6 = new CheckBox();
+            checkBox5 = new CheckBox();
+            checkBox4 = new CheckBox();
+            checkBox3 = new CheckBox();
+            checkBox2 = new CheckBox();
+            checkBox1 = new CheckBox();
             button4 = new Button();
             button5 = new Button();
             button3 = new Button();
@@ -170,17 +175,6 @@
             listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
             listBox2.KeyDown += listBox2_KeyDown;
             // 
-            // checkedListBox1
-            // 
-            checkedListBox1.CheckOnClick = true;
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(444, 87);
-            checkedListBox1.Margin = new Padding(4);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(289, 196);
-            checkedListBox1.TabIndex = 11;
-            checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
-            // 
             // tabControl1
             // 
             tabControl1.Controls.Add(tabPage1);
@@ -195,12 +189,17 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(checkBox6);
+            tabPage1.Controls.Add(checkBox5);
+            tabPage1.Controls.Add(checkBox4);
+            tabPage1.Controls.Add(checkBox3);
+            tabPage1.Controls.Add(checkBox2);
+            tabPage1.Controls.Add(checkBox1);
             tabPage1.Controls.Add(button4);
             tabPage1.Controls.Add(button5);
             tabPage1.Controls.Add(button3);
             tabPage1.Controls.Add(button2);
             tabPage1.Controls.Add(comboBox2);
-            tabPage1.Controls.Add(checkedListBox1);
             tabPage1.Controls.Add(label3);
             tabPage1.Controls.Add(listBox2);
             tabPage1.Controls.Add(label5);
@@ -214,6 +213,78 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Edit";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            checkBox6.Appearance = Appearance.Button;
+            checkBox6.AutoSize = true;
+            checkBox6.Location = new Point(392, 242);
+            checkBox6.Name = "checkBox6";
+            checkBox6.Size = new Size(93, 31);
+            checkBox6.TabIndex = 21;
+            checkBox6.Text = "checkBox6";
+            checkBox6.UseVisualStyleBackColor = true;
+            checkBox6.Visible = false;
+            // 
+            // checkBox5
+            // 
+            checkBox5.Appearance = Appearance.Button;
+            checkBox5.AutoSize = true;
+            checkBox5.Location = new Point(392, 205);
+            checkBox5.Name = "checkBox5";
+            checkBox5.Size = new Size(93, 31);
+            checkBox5.TabIndex = 20;
+            checkBox5.Text = "checkBox5";
+            checkBox5.UseVisualStyleBackColor = true;
+            checkBox5.Visible = false;
+            // 
+            // checkBox4
+            // 
+            checkBox4.Appearance = Appearance.Button;
+            checkBox4.AutoSize = true;
+            checkBox4.Location = new Point(392, 168);
+            checkBox4.Name = "checkBox4";
+            checkBox4.Size = new Size(93, 31);
+            checkBox4.TabIndex = 19;
+            checkBox4.Text = "checkBox4";
+            checkBox4.UseVisualStyleBackColor = true;
+            checkBox4.Visible = false;
+            // 
+            // checkBox3
+            // 
+            checkBox3.Appearance = Appearance.Button;
+            checkBox3.AutoSize = true;
+            checkBox3.Location = new Point(392, 131);
+            checkBox3.Name = "checkBox3";
+            checkBox3.Size = new Size(93, 31);
+            checkBox3.TabIndex = 18;
+            checkBox3.Text = "checkBox3";
+            checkBox3.UseVisualStyleBackColor = true;
+            checkBox3.Visible = false;
+            // 
+            // checkBox2
+            // 
+            checkBox2.Appearance = Appearance.Button;
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(392, 94);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(93, 31);
+            checkBox2.TabIndex = 17;
+            checkBox2.Text = "checkBox2";
+            checkBox2.UseVisualStyleBackColor = true;
+            checkBox2.Visible = false;
+            // 
+            // checkBox1
+            // 
+            checkBox1.Appearance = Appearance.Button;
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(392, 57);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(93, 31);
+            checkBox1.TabIndex = 16;
+            checkBox1.Text = "checkBox1";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.Visible = false;
             // 
             // button4
             // 
@@ -426,7 +497,6 @@
         private Label label4;
         private Label label5;
         private ListBox listBox2;
-        private CheckedListBox checkedListBox1;
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
@@ -448,5 +518,11 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private Label label1;
+        private CheckBox checkBox6;
+        private CheckBox checkBox5;
+        private CheckBox checkBox4;
+        private CheckBox checkBox3;
+        private CheckBox checkBox2;
+        private CheckBox checkBox1;
     }
 }
